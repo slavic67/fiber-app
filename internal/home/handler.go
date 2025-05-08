@@ -10,7 +10,8 @@ func NewHandler(router fiber.Router) {
 	h := &HomeHandler{
 		router: router,
 	}
-	h.router.Get("/", h.home)
+	api := h.router.Group("/api")
+	api.Get("/", h.home)
 }
 
 func (h *HomeHandler) home(c *fiber.Ctx) error {
