@@ -1,6 +1,9 @@
 package home
 
-import "github.com/gofiber/fiber/v2"
+import (
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/log"
+)
 
 type HomeHandler struct {
 	router fiber.Router
@@ -16,6 +19,7 @@ func NewHandler(router fiber.Router) {
 
 func (h *HomeHandler) home(c *fiber.Ctx) error {
 	//return c.SendString("Hello")
+	log.Info("Info")
 	return fiber.NewError(fiber.StatusBadRequest, "Limit params is undefined")
 
 }
