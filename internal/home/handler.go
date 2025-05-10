@@ -3,26 +3,25 @@ package home
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/rs/zerolog"
-	"github.com/rs/zerolog/log"
 )
 
 type HomeHandler struct {
-	router fiber.Router
+	router       fiber.Router
+	customLogger *zerolog.Logger
 }
 
-func NewHandler(router fiber.Router) {
+func NewHandler(router fiber.Router, customLogger *zerolog.Logger) {
 	h := &HomeHandler{
-		router: router,
+		router:       router,
+		customLogger: customLogger,
 	}
 	api := h.router.Group("/api")
 	api.Get("/", h.home)
 }
 
 func (h *HomeHandler) home(c *fiber.Ctx) error {
-	zerolog.SetGlobalLevel(zerolog.InfoLevel)
-	log.Info().
+	h.customLogger.Info().
 		Bool("isAdmin", true).
-		Str("email", "test@.ru").
 		Msg("Информация")
 
 	return c.SendString("Hello")
