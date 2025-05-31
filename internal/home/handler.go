@@ -11,6 +11,11 @@ type HomeHandler struct {
 	customLogger *zerolog.Logger
 }
 
+type User struct {
+	Id   int
+	Name string
+}
+
 // Конструктор обработчика
 func NewHandler(router fiber.Router, customLogger *zerolog.Logger) {
 	h := &HomeHandler{
@@ -24,11 +29,15 @@ func NewHandler(router fiber.Router, customLogger *zerolog.Logger) {
 
 // Функция для end-point главной страницы
 func (h *HomeHandler) home(c *fiber.Ctx) error {
+	users := []User{
+		{Id: 1, Name: "Anton"},
+		{Id: 2, Name: "Vasia"},
+	}
+	names := []string{"Anton", "Vasia"}
 	data := struct {
-		Count   int
-		IsAdmin bool
-		CanUse  bool
-	}{Count: 5, IsAdmin: true, CanUse: true}
+		Names []string
+		Users []User
+	}{Names: names, Users: users}
 	return c.Render("page", data)
 }
 
