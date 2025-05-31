@@ -8,6 +8,7 @@ import (
 	"github.com/gofiber/contrib/fiberzerolog"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/recover"
+	"github.com/gofiber/template/html/v2"
 )
 
 func main() {
@@ -16,8 +17,11 @@ func main() {
 	config.NewDatabaseConfig()                   // Конфигуратор параметров доступа к базе данных
 	logConfig := config.NewLogCofig()            // Параметры для логирования приложения
 	customLoggger := logger.NewLogger(logConfig) // Настройка вида логирования приложения
+	engine := html.New("./html", ".html")        //Загружаем шаблоны страниц
 
-	app := fiber.New()                            // Создание приложения
+	app := fiber.New(fiber.Config{
+		Views: engine,
+	}) // Создание приложения
 	app.Use(fiberzerolog.New(fiberzerolog.Config{ // Включение логирования на основе конфигурации
 		Logger: customLoggger,
 	}))
