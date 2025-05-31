@@ -7,6 +7,7 @@ import (
 	"github.com/rs/zerolog"
 )
 
+// Функция конфигурации формата логов приложения
 func NewLogger(config *config.LogConfig) *zerolog.Logger {
 	zerolog.SetGlobalLevel(zerolog.Level(config.Level))
 	var logger zerolog.Logger

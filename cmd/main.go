@@ -12,17 +12,16 @@ import (
 
 func main() {
 
-	config.Init()
-	config.NewDatabaseConfig()
-	logConfig := config.NewLogCofig()
-	customLoggger := logger.NewLogger(logConfig)
+	config.Init()                                // Загрузка файла .env
+	config.NewDatabaseConfig()                   // Конфигуратор параметров доступа к базе данных
+	logConfig := config.NewLogCofig()            // Параметры для логирования приложения
+	customLoggger := logger.NewLogger(logConfig) // Настройка вида логирования приложения
 
-	app := fiber.New()
-	app.Use(fiberzerolog.New(fiberzerolog.Config{
+	app := fiber.New()                            // Создание приложения
+	app.Use(fiberzerolog.New(fiberzerolog.Config{ // Включение логирования на основе конфигурации
 		Logger: customLoggger,
 	}))
-	app.Use(recover.New())
-
-	home.NewHandler(app, customLoggger)
-	app.Listen("localhost:3000")
+	app.Use(recover.New())              //Защищает приложения от паник в контроллерах
+	home.NewHandler(app, customLoggger) // Контроллер для домашней страницы
+	app.Listen("localhost:3000")        //Запуск приложения
 }
