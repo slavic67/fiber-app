@@ -27,15 +27,13 @@ func NewHandler(router fiber.Router, customLogger *zerolog.Logger) {
 
 // Функция для end-point главной страницы
 func (h *HomeHandler) home(c *fiber.Ctx) error {
-	tmpl, err := template.New("test").Parse("{{.Count}} - число пользователей")
-	data := struct{ Count int }{Count: 1}
-	if err != nil {
-		return fiber.NewError(fiber.StatusBadRequest, "Template error")
-	}
+	tmpl := template.Must(template.ParseFiles("./html/page.html"))
+	data := struct{ Count int }{Count: 5}
 	var tpl bytes.Buffer
 	if err := tmpl.Execute(&tpl, data); err != nil {
 		return fiber.NewError(fiber.StatusBadRequest, "Template compile error")
 	}
+	c.Set(fiber.HeaderContentType, fiber.MIMETextHTML) // Задаем content-type в заголовке ответа
 	return c.Send(tpl.Bytes())
 
 }
