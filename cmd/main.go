@@ -4,6 +4,7 @@ import (
 	"develop/go-fiber/config"
 	"develop/go-fiber/internal/home"
 	"develop/go-fiber/pkg/logger"
+	"strings"
 
 	"github.com/gofiber/contrib/fiberzerolog"
 	"github.com/gofiber/fiber/v2"
@@ -18,6 +19,11 @@ func main() {
 	logConfig := config.NewLogCofig()            // Параметры для логирования приложения
 	customLoggger := logger.NewLogger(logConfig) // Настройка вида логирования приложения
 	engine := html.New("./html", ".html")        //Загружаем шаблоны страниц
+	engine.AddFuncMap(map[string]interface{}{    //Определяем функции , которые можем использовать в шаблонах html
+		"ToUpper": func(c string) string {
+			return strings.ToUpper(c)
+		},
+	})
 
 	app := fiber.New(fiber.Config{
 		Views: engine,
