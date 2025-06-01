@@ -4,7 +4,9 @@ import "develop/go-fiber/views/components"
 
 templ Main() {
     <main>
-    @components.Title("Найди работу своей мечты")
+    @layout.Header() {
+        @components.Title("Найди работу своей мечты")
+    }
     Main
     </main>
 }
