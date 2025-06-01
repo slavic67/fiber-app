@@ -4,6 +4,10 @@ import "develop/go-fiber/views/components"
 import "develop/go-fiber/views/layout"
 
 templ Main() {
+    @layout.Layout(layout.LayoutProps{
+        Title: "Найди работу мечты",
+        MetaDescription: "Сайт по поиску работы мечты",
+    }) {
     <main>
     @layout.Header() {
         @components.Title("Найди работу своей мечты")
@@ -11,4 +15,5 @@ templ Main() {
     }
     Main
     </main>
+    }
 }
