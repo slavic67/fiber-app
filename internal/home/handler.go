@@ -25,14 +25,14 @@ func NewHandler(router fiber.Router, customLogger *zerolog.Logger) {
 		router:       router,
 		customLogger: customLogger,
 	}
-	api := h.router.Group("/api")
-	api.Get("/", h.home) // end-point главной страницы
-	api.Get("/error", h.error)
+
+	h.router.Get("/", h.home) // end-point главной страницы
+	h.router.Get("/404", h.error)
 }
 
 // Функция для end-point главной страницы
 func (h *HomeHandler) home(c *fiber.Ctx) error {
-	component := views.Hello("Slava") // Создаем компонент на основе view
+	component := views.Main() // Создаем компонент на основе view
 	return tadapter.Render(c, component)
 }
 
