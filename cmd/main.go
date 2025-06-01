@@ -22,6 +22,7 @@ func main() {
 		Logger: customLoggger,
 	}))
 	app.Use(recover.New())              //Защищает приложения от паник в контроллерах
+	app.Static("/public", "./public")   // Подключаем статические файлы в проект
 	home.NewHandler(app, customLoggger) // Контроллер для домашней страницы
 	app.Listen("localhost:3000")        //Запуск приложения
 }
